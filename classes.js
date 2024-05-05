@@ -7,8 +7,6 @@ class Sprite {
 		this.image.onload = () => {
 			this.width = this.image.width / this.frames.max
 			this.height = this.image.height
-			console.log(this.width)
-			console.log(this.height)
 		}
 		this.animate = animate
 		this.sprites = sprites

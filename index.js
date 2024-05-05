@@ -50,12 +50,13 @@ collisionsMap.forEach((row, i) => {
 const assetsShop1 = []
 const assetsKiosk1 = []
 const assetsKiosk2 = []
-const assetsKiosk3 = []
+const zapleteniLab = []
 const assetsKiosk4 = []
 const assetsSign1 = []
 const assetsSign4 = []
 const assetsBigChest = []
 const assetsSignBaggy = []
+const assetsSignRugs = []
 const assetsSignShop = []
 const assetsSignNews = []
 const buttonsLanguage = []
@@ -87,7 +88,7 @@ assetsMap.forEach((row, i) => {
 							y: i * Asset.height + offset.y
 						}}))
 							else if(symbol == 7694)
-							assetsKiosk3.push(new Asset({position:{
+							zapleteniLab.push(new Asset({position:{
 								x: j * Asset.width + offset.x,
 								y: i * Asset.height + offset.y
 							}}))
@@ -146,6 +147,11 @@ assetsMap.forEach((row, i) => {
 																			x: j * Button.width + offset.x,
 																			y: i * Button.height + offset.y
 																			}}))
+																				else if(symbol == 7711)
+																				assetsSignRugs.push(new Asset({position:{
+																					x: j * Asset.width + offset.x,
+																					y: i * Asset.height + offset.y
+																				}}))
 			})
 	})
 const image = new Image()
@@ -239,8 +245,10 @@ const headsImage = new Image()
 headsImage.src = './images/heads.png'
 
 const heartsImage = new Image()
-heartsImage.src = './images/hearts.png'
+heartsImage.src = './images/zajcD.png'
 
+const heartsLImage = new Image()
+heartsImage.src = './images/zajcL.png'
 
 
 const audio = new Audio()
@@ -248,11 +256,12 @@ audio.src = './audio/ZeldaMusic.mp3'
 audio.volume = 0.4
 
 const hearts = []
-//const heartsImage = []
 
 for (let i = 0; i < buttonsHearts.length; i++){
 	heartsImage[i] = new Image()
-	heartsImage[i].src = './images/hearts.png'
+	heartsImage[i].src = './images/zajc.png'
+	heartsLImage[i] = new Image()
+	heartsLImage[i].src = './images/zajcL.png'
 	const posX = buttonsHearts[i].position.x
 	const posY = buttonsHearts[i].position.y
 	hearts.push( new Sprite({
@@ -262,18 +271,21 @@ for (let i = 0; i < buttonsHearts.length; i++){
 	},
 	image: heartsImage[i],
 	frames: {
-		max: 7,
+		max: 4,
 		hold: 15
+	},
+	sprites: {
+		desno: heartsImage[i],
+		levo: heartsLImage[i]
 	},
 	animate: true
 
 }))
 }
 
-hearts[0].image.width = 336
-hearts[0].image.height = 48
+//hearts[0].image.width = 336
+//hearts[0].image.height = 48
 
-console.log(hearts)
 
  const player = new Sprite({
 	position: {
@@ -316,7 +328,7 @@ const shopSign = new Sprite({
 const gallerySign = new Sprite({
 	position: {
 		x: offset.x + square.iii * 17 - 5,
-		y: offset.y + square.iii * 12 - 5
+		y: offset.y + square.iii * 12 - 20
 	},
 	image: gallerySignImage,
 	frames: {
@@ -335,7 +347,7 @@ const labSign = new Sprite({
 	image: labSignImage,
 	frames: {
 		max: 12,
-		hold: 5
+		hold: 10
 	},
 	animate: true
 
@@ -447,11 +459,7 @@ const news = new Sprite({
 		x: canvas.width / 2 - 1000 /2,
 		y: canvas.height / 2 - 700 / 2
 	},
-	image: newsImage,
-	frames: {
-		max: 2,
-		hold: 0
-	}
+	image: newsImage
 })
 
 const foreground = new Sprite({
@@ -520,10 +528,10 @@ const keys = {
 	},
 }
 
-console.log(buttonsHearts)
+
 
 //const movables = [background, ...boundaries, foreground, ...assetsSign1]
-const movables = [headsButton, ...buttonsHearts, ...hearts, ...buttonsHeads, ...buttonsSettings, settings, musicButton, ...buttonsAudio, ...buttonsLanguage, language, gallerySign, ... assetsSignNews, ...assetsSignShop, ...assetsSignBaggy, ...assetsSign1, ...assetsSign4, background, ...boundaries, ...assetsBigChest, newssign, bigChest, tide, bigFire, smallFireTwo, smallFireOne, foreground, shopSign, ...assetsShop1, ...assetsKiosk1, ...assetsKiosk2, ...assetsKiosk3, ...assetsKiosk4]
+const movables = [labSign, gallerySign, ...assetsSignRugs, ...assetsSignNews, ...assetsSignShop, ...assetsSignBaggy, ...assetsSign1, ...assetsSign4, background, ...boundaries, ...assetsBigChest, newssign, bigChest, tide, bigFire, smallFireTwo, smallFireOne, foreground, shopSign, ...assetsShop1, ...assetsKiosk1, ...assetsKiosk2, ...zapleteniLab, ...assetsKiosk4]
 
 function rectangularCollisionMap({rectangle1, rectangle2}){
 	return (
@@ -554,6 +562,8 @@ console.log(player.position)
 function textPromptOpacity()
 	{
 		document.querySelector('#textPrompt').style.opacity = '0'
+		document.querySelector('#textPromptImg').style.opacity = '0'
+
 }
 
 
@@ -571,110 +581,13 @@ let headsState = false
 var cursorX = 0
 var cursorY = 0
 
-window.addEventListener('click', printMousePos, true);
-
-function printMousePos(e){
-   	//document.onmouseclick = function(e){
-    cursorX = e.offsetX;
-    cursorY = e.offsetY;
-
-
-
-    for (let i = 0; i < buttonsSettings.length; i++){
-	const buttonSettings = buttonsSettings[i]
-		if ( rectangularCollisionButton ({
-			mousePosX: cursorX,
-			mousePosY: cursorY,
-			rectangle2: buttonSettings
-			}))	
-		{
-		console.log('change language')
-		if(settingsState){
-			settingsState = false
-		}
-		else{
-			settingsState = true
-		}
-		}
-
-	}
-
-
-    for (let i = 0; i < buttonsLanguage.length; i++){
-	const buttonLanguage = buttonsLanguage[i]
-		if ( rectangularCollisionButton ({
-			mousePosX: cursorX,
-			mousePosY: cursorY,
-			rectangle2: buttonLanguage
-			}))	
-		{
-		console.log('change language')
-		if(settingsState){
-		if(!sloLang){
-			sloLang = true
-		}
-		else{
-			sloLang = false
-		}
-		}
-		}
-		//console.log(sloLang)
-	}
-
-	for (let i = 0; i < buttonsHeads.length; i++){
-	const buttonHeads = buttonsHeads[i]
-		if ( rectangularCollisionButton ({
-			mousePosX: cursorX,
-			mousePosY: cursorY,
-			rectangle2: buttonHeads
-			}))	
-		{
-		if(settingsState){
-		if(!headsState){
-			headsState = true
-			characterGirl = true
-			headsButton.frames.val = 1
-		}
-		else{
-			headsState = false
-			characterGirl = false
-			headsButton.frames.val = 0
-		}
-		}
-		}
-		
-	}
-
-	for (let i = 0; i < buttonsAudio.length; i++){
-	const buttonAudio = buttonsAudio[i]
-		if ( rectangularCollisionButton ({
-			mousePosX: cursorX,
-			mousePosY: cursorY,
-			rectangle2: buttonAudio
-			}))	
-		{
-		console.log('play or mute audio')
-		if(settingsState){
-		if(!audioState){
-			audio.play()
-			audioState = true
-			musicButton.animate = true
-		}
-		else{
-			audio.pause()
-			audioState = false
-			musicButton.animate = false
-		}
-		}
-		}
-		console.log(audioState)
-	}
-
-}
+let num = 0
+let numm = 0
 
 function animate() {
 	const animationId = window.requestAnimationFrame(animate)
 	background.draw()
+
 
 	boundaries.forEach(Boundary => {
 		Boundary.draw()
@@ -691,7 +604,7 @@ function animate() {
 	assetsKiosk2.forEach(Asset => {
 		Asset.draw()
 	})
-	assetsKiosk3.forEach(Asset => {
+	zapleteniLab.forEach(Asset => {
 		Asset.draw()
 	})
 	assetsKiosk4.forEach(Asset => {
@@ -712,27 +625,11 @@ function animate() {
 	assetsSignNews.forEach(Asset => {
 		Asset.draw()
 	})
-	buttonsSettings.forEach(Button => {
-		Button.draw()
+	assetsSignRugs.forEach(Asset => {
+		Asset.draw()
 	})
 
-	if(settingsState)
-	{
-		buttonsLanguage.forEach(Button => {
-			Button.draw()
-		})
-		language.draw()
 
-		buttonsAudio.forEach(Button => {
-			Button.draw()
-		})
-		musicButton.draw()
-
-		buttonsHeads.forEach(Button => {
-			Button.draw()
-		})
-		headsButton.draw()
-	}
 
 
 smallFireTwo.draw()
@@ -740,10 +637,26 @@ smallFireOne.draw()
 bigFire.draw()
 bigChest.draw()
 tide.draw()
-settings.draw()
-
+//console.log(hearts.image)
 for (let i = 0; i < hearts.length; i++){
-hearts[i].draw()	
+	if (hearts[i].frames.elapsed % hearts[i].frames.hold === 0){
+		hearts[i].position.x += 48;
+		num++;
+		if (num === 10){
+			num = 0;
+			numm++;
+			if (numm === 8){
+				numm = 0;
+			//	if (hearts.sprites == levo){
+			//		hearts.image = hearts.sprites.desno
+			//	}
+			//	if (hearts.sprites == desno){
+			//		hearts.image = hearts.sprites.levo
+			//	}
+			}
+		}
+	}
+//hearts[i].draw()
 }
 
 player.draw()
@@ -751,7 +664,7 @@ foreground.draw()
 shopSign.draw()
 newssign.draw()
 gallerySign.draw()
-//labSign.draw()
+labSign.draw()
 
 
 let moving = true
@@ -775,6 +688,7 @@ for (let i = 0; i < assetsShop1.length; i++){
 		{
 
 		document.querySelector('#textPrompt').style.opacity = '1'
+		document.querySelector('#textPromptImg').style.opacity = '1'
 		if (!sloLang){
 		document.querySelector('#textPrompt').innerHTML = 'Press Enter to shop...'
 		}
@@ -785,7 +699,7 @@ for (let i = 0; i < assetsShop1.length; i++){
 			textPromptOpacity()
 			console.log('Enter')
 			loading.draw()
-			window.location.assign("https://www.ghosttown.si/home")
+			window.location.assign("https://www.ghosttown.si/shop")
 		}
 		}
 		
@@ -802,6 +716,24 @@ for (let i = 0; i < assetsKiosk2.length; i++){
 		}
 		} 
 
+for (let i = 0; i < zapleteniLab.length; i++){
+	const zapleteniLabOne = zapleteniLab[i]
+		if ( rectangularCollisionAssets ({
+			rectangle1: player,
+			rectangle2: zapleteniLabOne
+			}))	
+		{
+		document.querySelector('#textPrompt').innerHTML = 'Press Enter to walk in a Zapleteni Lab and create your own Zapletni Bag.'
+		document.querySelector('#textPrompt').style.opacity = '1'
+		document.querySelector('#textPromptImg').style.opacity = '1'
+		if (keys.Enter.pressed && lastKey == 'Enter'){
+			textPromptOpacity()
+			loading.draw()
+			window.location.assign("https://www.ghosttown.si/product/zapleteni-bag")
+			}
+		}
+	}
+
 for (let i = 0; i < assetsKiosk1.length; i++){
 	const assetKiosk1 = assetsKiosk1[i]
 		if ( rectangularCollisionAssets ({
@@ -811,6 +743,7 @@ for (let i = 0; i < assetsKiosk1.length; i++){
 		{
 		document.querySelector('#textPrompt').innerHTML = 'Press Enter to enter the gallery...'
 		document.querySelector('#textPrompt').style.opacity = '1'
+		document.querySelector('#textPromptImg').style.opacity = '1'
 		if (keys.Enter.pressed && lastKey == 'Enter'){
 			textPromptOpacity()
 			loading.draw()
@@ -833,6 +766,7 @@ for (let i = 0; i < assetsBigChest.length; i++){
 
 	if (keys.Enter.pressed && lastKey == 'Enter') {
 		document.querySelector('#StartText').style.opacity = '0'
+		document.querySelector('#StartTextImg').style.opacity = '0'
 		startKey = true
 		if(bigChestState){
 			document.querySelector('#textPrompt').style.opacity = '1'
@@ -840,7 +774,7 @@ for (let i = 0; i < assetsBigChest.length; i++){
 				document.querySelector('#textPrompt').innerHTML = 'Horaaay!! You have found a discount code for our new hoodie: DOLGEPA-10.'				
 			}
 			else{
-				document.querySelector('#textPrompt').innerHTML = 'Bravooo!! Našel si kodo za popust na naš novi hoodie: DOLGEPA-10.'				
+				document.querySelector('#textPrompt').innerHTML = 'Bravooo!! Nasel si kodo za popust na nas novi hoodie: DOLGEPA-10.'				
 			}
 			bigChest.image = bigChest.sprites.open
 			
@@ -877,6 +811,7 @@ for (let i = 0; i < assetsBigChest.length; i++){
 					}))	
 				{
 				document.querySelector('#textPrompt').style.opacity = '1'
+				document.querySelector('#textPromptImg').style.opacity = '1'
 				if (!sloLang){
 					document.querySelector('#textPrompt').innerHTML = 'Ghost Town Shop ahead, do not be shy, people here are nice.'
 				}
@@ -894,11 +829,31 @@ for (let i = 0; i < assetsBigChest.length; i++){
 					}))	
 				{
 				document.querySelector('#textPrompt').style.opacity = '1'
+				document.querySelector('#textPromptImg').style.opacity = '1'
 				if(!sloLang){
-					document.querySelector('#textPrompt').innerHTML = 'Make your own Knited baggy lab! We are still renovating so wait a bit, Thank you.'
+					document.querySelector('#textPrompt').innerHTML = 'Make your own knited bag lab! Have some fun and design your favourite Zapleteni bag.'
 				}
 				else{
-					document.querySelector('#textPrompt').innerHTML = 'Naredi svojo Zapleteno torbico laboratorij! Trenuntno še vedno prenavljamo, hvala za razumevanje.'
+					document.querySelector('#textPrompt').innerHTML = 'Naredi svojo Zapleteno torbico lab! Uzivaj in sestavi svojo najljubso Zapleteno torbico.'
+				}
+				}
+			}
+
+
+		for (let i = 0; i < assetsSignRugs.length; i++){
+			const assetSignRugs = assetsSignRugs[i]
+				if ( rectangularCollisionAssets ({
+					rectangle1: player,
+					rectangle2: assetSignRugs
+					}))	
+				{
+				document.querySelector('#textPrompt').style.opacity = '1'
+				document.querySelector('#textPromptImg').style.opacity = '1'
+				if(!sloLang){
+					document.querySelector('#textPrompt').innerHTML = 'Workshop for rugs ahead. We are still renovaiting, but do not worry, we are doing our best to bring desert on this island.'
+				}
+				else{
+					document.querySelector('#textPrompt').innerHTML = 'Delavnica za preproge pred tabo. Se vedno prenavljamo, ampak brez skrbi, delamo vse, da prinesemo puscavo na ta otok.'
 				}
 				}
 			}
@@ -912,6 +867,7 @@ for (let i = 0; i < assetsBigChest.length; i++){
 				{
 
 				document.querySelector('#textPrompt').style.opacity = '1'
+				document.querySelector('#textPromptImg').style.opacity = '1'
 
 				if(!sloLang){
 					document.querySelector('#textPrompt').innerHTML = 'Ghost Town gallery ahead.'
@@ -930,6 +886,7 @@ for (let i = 0; i < assetsBigChest.length; i++){
 					}))	
 				{
 				document.querySelector('#textPrompt').style.opacity = '1'
+				document.querySelector('#textPromptImg').style.opacity = '1'
 				if(!sloLang){
 				document.querySelector('#textPrompt').innerHTML = 'Newspaper stand. Walk up to it and read latest news.'
 				}
@@ -1089,8 +1046,68 @@ window.addEventListener('keyup', (e) => {
 	}
 })
 
+let worldButton = document.querySelector("#button1");
+let characterButton = document.querySelector("#button2");
+let cdButton = document.querySelector("#button3");
 
+characterButton.addEventListener("mousedown", pressingDown, false);
+characterButton.addEventListener("mouseup", notPressingDown, false);
+characterButton.addEventListener("mouseleave", notPressingDown, false);
+characterButton.addEventListener("touchstart", pressingDown, false);
+characterButton.addEventListener("touchend", notPressingDown, false);
 
+worldButton.addEventListener("mousedown", pressingDown, false);
+worldButton.addEventListener("mouseup", notPressingDown, false);
+worldButton.addEventListener("mouseleave", notPressingDown, false);
+worldButton.addEventListener("touchstart", pressingDown, false);
+worldButton.addEventListener("touchend", notPressingDown, false);
+
+cdButton.addEventListener("mousedown", pressingDown, false);
+cdButton.addEventListener("mouseup", notPressingDown, false);
+cdButton.addEventListener("mouseleave", notPressingDown, false);
+cdButton.addEventListener("touchstart", pressingDown, false);
+cdButton.addEventListener("touchend", notPressingDown, false);
+ 
+function characterChange() {
+      
+		if(!headsState){
+			headsState = true
+			characterGirl = true
+			//headsButton.frames.val = 1
+			document.querySelector("#img2").setAttribute('src', "./images/maleHead.png")
+		}
+		else{
+			headsState = false
+			characterGirl = false
+			//headsButton.frames.val = 0
+			document.querySelector("#img2").setAttribute('src', "./images/femaleHead.png")
+		}
+ }	
+
+function cdGIF() {
+
+     
+		if(!audioState){
+			audio.play()
+			audioState = true
+			document.querySelector("#img3").setAttribute('src', "./images/cd.gif")
+		}
+		else{
+			audio.pause()
+			audioState = false
+			document.querySelector("#img3").setAttribute('src', "./images/cd_fix.png")
+		}
+	}
+function languageChange() {
+    
+		if(!sloLang){
+			sloLang = true
+		}
+		else{
+			sloLang = false
+		}
+	}
+	
 
     let itemW = document.querySelector("#itemW");
     let itemA = document.querySelector("#itemA");
@@ -1108,7 +1125,6 @@ window.addEventListener('keyup', (e) => {
     // event fires
     let pressHoldDuration = 50;
 
-   
     itemW.addEventListener("mousedown", pressingDown, false);
     itemW.addEventListener("mouseup", notPressingDown, false);
     itemW.addEventListener("mouseleave", notPressingDown, false);
@@ -1138,6 +1154,7 @@ window.addEventListener('keyup', (e) => {
     itemEnter.addEventListener("mouseleave", notPressingDown, false);
     itemEnter.addEventListener("touchstart", pressingDown, false);
     itemEnter.addEventListener("touchend", notPressingDown, false);
+
     // Listening for our custom pressHold event
 
 
@@ -1146,6 +1163,7 @@ window.addEventListener('keyup', (e) => {
       requestAnimationFrame(timer);
 
       e.preventDefault();
+      console.log(e);
 	switch (e.currentTarget.innerHTML) {
 		case 'W' :
 			keys.w.pressed = true
@@ -1168,8 +1186,20 @@ window.addEventListener('keyup', (e) => {
 			lastKey = 'Enter'
 			break
 	}
+		switch (e.currentTarget.id) {
+		case 'button1' :
+			languageChange();
+			break
+		case 'button2' :
+			characterChange();
+			break
+		case 'button3' :
+			cdGIF();
+			break
+	}
 
-      console.log(e.currentTarget.innerHTML);
+
+      console.log(e.currentTarget.id);
     }
 
     function notPressingDown(e) {
