@@ -1,0 +1,115 @@
+<head>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+<style>
+
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.scrollable 
+        {
+            overflow: auto;
+        }
+.buttonSize{
+	font-size: 25px; height: 100px; width: 100px;
+}
+	* {
+		font-family: 'Press Start 2P', cursive;
+	}
+	html, body{
+		background-color: black;
+	}
+</style>
+</head>
+<div 	class = "unselectable"
+		style="display: inline-block;
+		position: fixed;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, -25%);">
+
+	<div 
+		class = "unselectable"
+		id="overlappingDiv"
+		style="background-color: black; 
+		position: absolute; 
+		top: 0; 
+		right: 0; 
+		bottom: 0; 
+		left: 0; 
+		opacity: 0; 
+		pointer-events: none;"></div>
+	<div 
+		id="StartText"
+		style="
+	 	background-color: white;
+		height: 156px; 
+		width: 592px;
+		display: inline-block;
+		position: fixed;
+	    top: 60%;
+	    left: 50%;
+	    transform: translate(-50%, -60%);
+		border: 3px black solid;
+		align-items: center; 
+		justify-content: center; 
+		opacity: 0;
+		padding: 16px;
+		line-height: 130%;
+	"></div>
+
+
+	<div 
+		id="textPrompt"
+		style="background-color: white;
+		height: 96px; 
+		width: 592px;
+		display: inline-block;
+		position: fixed;
+	    top: 60%;
+	    left: 50%;
+	    transform: translate(-50%, -60%);
+		border: 3px black solid;
+		justify-content: center; 
+		opacity: 0; 
+		padding: 16px;
+		line-height: 120%;
+		">Hello World!</div>
+<button id="itemSlo" style=" background-color: rgba(0, 0, 0, 0.1); color: white; opacity: 0.5; height: 48px; width: 48px; border: 0px; font-size: 10px; border-radius: 0px;">SLO</button>
+<button class="button" id="Ok"><img src="images/smallFire.png"></button>
+<canvas style="border: 3px solid black; border: 20px solid gray;"></canvas>   
+<div
+	id="buttonsDiv"
+	style="
+ 	background-color: lightgray;
+ 	height: 275px;
+ 	align-items: center;
+	">
+	<button class = "unselectable" id = "itemW" style = " box-shadow: 0px 10px; border: 5px black solid; color: black;border-radius: 25px; font-size: 25px; height: 100px; width: 100px; position: absolute; left:710px; bottom: 150px;">W</button>
+	<button class = "unselectable" id="itemA" style=" box-shadow: 0px 10px; border: 5px black solid; border-radius: 25px; color: black; font-size: 25px; height: 100px; width: 100px; position: absolute; bottom: 25px; left: 585px;">A</button>
+	<button class = "unselectable" id="itemS" style=" box-shadow: 0px 10px; border: 5px black solid;border-radius: 25px; color: black; font-size: 25px; height: 100px; width: 100px; position: absolute; bottom: 25px; left: 710px;">S</button>
+	<button class = "unselectable" id="itemD" style=" box-shadow: 0px 10px; border: 5px black solid;border-radius: 25px; color: black; font-size: 25px; height: 100px; width: 100px; position: absolute; bottom: 25px; left: 835px;">D</button>
+	<button class = "unselectable" id="itemEnter" style=" box-shadow: 0px 10px; border: 5px black solid;border-radius: 25px; color: black; font-size: 25px; height: 100px; width: 200px; position: absolute; bottom: 100px; left: 1060px;">Enter</button>
+	</div>
+
+	
+</div>
+
+		
+
+<script src="data/assets.js"></script>
+<script src="data/tide.js"></script>
+<script src="data/collisions.js"></script>
+<script src="classes.js"></script>
+<script src="index.js"></script> 
+
+<!-- background-color: white;
+display: flex;
+position: absolute; -->
